@@ -1,6 +1,6 @@
 class Player {
   static get VERSION() {
-    return "0.9";
+    return "0.10";
   }
 
   static betRequest(gameState, bet) {
@@ -41,7 +41,7 @@ class Player {
       );
     }
 
-    if (gameState.current_buy_in - ourPlayer.bet > ourPlayer.stack) {
+    if (gameState.current_buy_in - ourPlayer.bet >= ourPlayer.stack) {
       console.log(
         `[Game: ${gameState.game_id}], round: ${gameState.round}, result: Fold because of stack size`
       );
