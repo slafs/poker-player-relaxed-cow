@@ -1,6 +1,6 @@
 class Player {
   static get VERSION() {
-    return "0.27";
+    return "0.28";
   }
 
   static async betRequest(gameState, bet) {
@@ -60,6 +60,9 @@ class Player {
       const highestStack = Player.getHighestStack(gameState);
 
       if (ourPlayer.stack > highestStack * 4) {
+        console.log(
+          `[Game: ${gameState.game_id}], round: ${gameState.round}, result: intimidation`
+        );
         return bet(highestStack);
       }
 
