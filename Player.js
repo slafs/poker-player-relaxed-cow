@@ -1,6 +1,6 @@
 class Player {
   static get VERSION() {
-    return "0.17";
+    return "0.18";
   }
 
   static betRequest(gameState, bet) {
@@ -93,11 +93,13 @@ class Player {
       cards: JSON.stringify(cards),
     });
 
-    fetch(`https://rainman.leanpoker.org/rank?${params}`).then((response) => {
-      const res = JSON.parse(response.text());
-      console.log(`Rank response: ${JSON.stringify(response)}`);
-      return res.rank;
-    });
+    fetch(`https://rainman.leanpoker.org/rank?${params}`).then(
+      async (response) => {
+        const res = await response.text();
+        console.log(`Rank response: ${res}`);
+        return res.rank;
+      }
+    );
   }
 
   static getOurPlayer(gameState) {
