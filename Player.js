@@ -1,6 +1,6 @@
 class Player {
   static get VERSION() {
-    return "0.22";
+    return "0.23";
   }
 
   static betRequest(gameState, bet) {
@@ -110,7 +110,7 @@ class Player {
       cards: JSON.stringify(cards),
     });
 
-    fetch(`https://rainman.leanpoker.org/rank?${params}`)
+    return fetch(`https://rainman.leanpoker.org/rank?${params}`)
       .then((res) => res.json())
       .then((result) => {
         console.log(`Rank service: ${result.rank}`);
