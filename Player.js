@@ -1,6 +1,6 @@
 class Player {
   static get VERSION() {
-    return "0.12";
+    return "0.13";
   }
 
   static betRequest(gameState, bet) {
@@ -86,7 +86,7 @@ class Player {
 
     fetch(`https://rainman.leanpoker.org/rank?${params}`).then((response) => {
       const res = response.json();
-      console.log(`Rank response: ${JSON.stringify(res)}`);
+      console.log(`Rank response: ${response}`);
       return res.rank;
     });
   }
