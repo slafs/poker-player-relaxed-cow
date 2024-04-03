@@ -1,10 +1,10 @@
 class Player {
   static get VERSION() {
-    return "0.6";
+    return "0.7";
   }
 
   static betRequest(gameState, bet) {
-    const ourPlayer = this.getOurPlayer(gameState);
+    const ourPlayer = Player.getOurPlayer(gameState);
 
     if (
       gameState.bet_index === 0 &&
@@ -27,7 +27,7 @@ class Player {
     return bet(gameState.current_buy_in - ourPlayer.bet);
   }
 
-  getOurPlayer(gameState) {
+  static getOurPlayer(gameState) {
     return gameState.players[gameState.in_action];
   }
 
