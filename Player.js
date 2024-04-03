@@ -1,6 +1,6 @@
 class Player {
   static get VERSION() {
-    return "0.29";
+    return "0.30";
   }
 
   static async betRequest(gameState, bet) {
@@ -79,13 +79,20 @@ class Player {
 
   static getHandRank(ourPlayer) {
     const cards = ourPlayer.hole_cards;
+    const dealtPair = cards.map((card) => card.rank);
 
-    const numberCards = cards.filter((card) => card.rank.match(/[2-9]/));
+    const bigPocketPairs = [
+      ["A", "A"],
+      ["K", "K"],
+      ["Q", "Q"],
+      ["J", "J"],
+      ["10", "10"],
+    ];
 
-    if (numberCards.length) {
-      return 0;
-    } else {
+    if (bigPocketPairs.includes(dealtPair)) {
       return 1;
+    } else {
+      return 0;
     }
   }
 
