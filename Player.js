@@ -1,6 +1,6 @@
 class Player {
   static get VERSION() {
-    return "0.16";
+    return "0.17";
   }
 
   static betRequest(gameState, bet) {
@@ -41,15 +41,24 @@ class Player {
       );
     }
 
-    if (gameState.current_buy_in - ourPlayer.bet >= ourPlayer.stack) {
-      const handRank = Player.getHandRank(ourPlayer);
+    const handRank = Player.getHandRank(ourPlayer);
 
+    if (gameState.current_buy_in - ourPlayer.bet >= ourPlayer.stack) {
       if (handRank === 0) {
         console.log(
           `[Game: ${gameState.game_id}], round: ${gameState.round}, result: Fold because of stack size`
         );
         return bet(0);
       }
+    }
+
+    if (handRank === 1) {
+      console.log(
+        `[Game: ${gameState.game_id}], round: ${gameState.round}, result: Raise X2`
+      );
+      return bet(
+        gameState.current_buy_in - ourPlayer.bet + gameState.minimum_raise * 2
+      );
     }
 
     console.log(
