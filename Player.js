@@ -1,6 +1,6 @@
 class Player {
   static get VERSION() {
-    return "0.20";
+    return "0.21";
   }
 
   static betRequest(gameState, bet) {
@@ -56,6 +56,13 @@ class Player {
       console.log(
         `[Game: ${gameState.game_id}], round: ${gameState.round}, result: Raise X2`
       );
+
+      const highestStack = Player.getHighestStack(gameState);
+
+      if (ourPlayer.stack > highestStack * 4) {
+        return bet(highestStack);
+      }
+
       return bet(
         gameState.current_buy_in - ourPlayer.bet + gameState.minimum_raise * 2
       );
@@ -77,6 +84,16 @@ class Player {
     } else {
       return 1;
     }
+  }
+
+  static getHighestStack(gameState) {
+    return gameState.players.reduce((acc, player) => {
+      if (typeof player.stack === "number") {
+        return Math.max(acc, player.stack);
+      }
+
+      return acc;
+    }, 0);
   }
 
   static getRank(gameState) {
