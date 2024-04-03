@@ -1,9 +1,11 @@
 class Player {
   static get VERSION() {
-    return "0.5";
+    return "0.6";
   }
 
   static betRequest(gameState, bet) {
+    const ourPlayer = this.getOurPlayer(gameState);
+
     if (
       gameState.bet_index === 0 &&
       (gameState.dealer + 1) % 5 === gameState.in_action
@@ -18,7 +20,15 @@ class Player {
       return bet(gameState.small_blind * 2);
     }
 
-    return bet(gameState.current_buy_in - gameState.players[gameState.in_action].bet);
+    if (gameState.current_buy_in - ourPlayer.bet > ourPlayer.stack) {
+      return bet(0);
+    }
+
+    return bet(gameState.current_buy_in - ourPlayer.bet);
+  }
+
+  getOurPlayer(gameState) {
+    return gameState.players[gameState.in_action];
   }
 
   static showdown(gameState) {
