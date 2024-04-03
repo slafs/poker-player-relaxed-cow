@@ -1,6 +1,6 @@
 class Player {
   static get VERSION() {
-    return "0.24";
+    return "0.25";
   }
 
   static async betRequest(gameState, bet) {
@@ -52,7 +52,7 @@ class Player {
       }
     }
 
-    if (handRank === 1) {
+    if (rank === -1 && handRank === 1) {
       console.log(
         `[Game: ${gameState.game_id}], round: ${gameState.round}, result: Raise X2`
       );
