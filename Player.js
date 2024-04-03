@@ -1,6 +1,6 @@
 class Player {
   static get VERSION() {
-    return "0.11";
+    return "0.12";
   }
 
   static betRequest(gameState, bet) {
@@ -42,16 +42,32 @@ class Player {
     }
 
     if (gameState.current_buy_in - ourPlayer.bet >= ourPlayer.stack) {
-      console.log(
-        `[Game: ${gameState.game_id}], round: ${gameState.round}, result: Fold because of stack size`
-      );
-      return bet(0);
+      const handRank = Player.getHandRank(ourPlayer);
+
+      if (handRank === 0) {
+        console.log(
+          `[Game: ${gameState.game_id}], round: ${gameState.round}, result: Fold because of stack size`
+        );
+        return bet(0);
+      }
     }
 
     console.log(
       `[Game: ${gameState.game_id}], round: ${gameState.round}, result: Check/call`
     );
     return bet(gameState.current_buy_in - ourPlayer.bet);
+  }
+
+  static getHandRank(ourPlayer) {
+    const cards = ourPlayer.hole_cards;
+
+    const numberCards = cards.filter((card) => card.rank.match(/[2-9]/));
+
+    if (numberCards.length) {
+      return 1;
+    } else {
+      return 0;
+    }
   }
 
   static getRank(gameState) {
