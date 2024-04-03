@@ -1,9 +1,9 @@
 class Player {
   static get VERSION() {
-    return "0.23";
+    return "0.24";
   }
 
-  static betRequest(gameState, bet) {
+  static async betRequest(gameState, bet) {
     const ourPlayer = Player.getOurPlayer(gameState);
 
     if (
@@ -26,7 +26,7 @@ class Player {
       return bet(gameState.small_blind * 2);
     }
 
-    const rank = Player.getRank(gameState);
+    const rank = await Player.getRank(gameState);
 
     console.log(
       `[Game: ${gameState.game_id}], round: ${gameState.round}, rank: ${rank}`
@@ -96,7 +96,7 @@ class Player {
     }, 0);
   }
 
-  static getRank(gameState) {
+  static async getRank(gameState) {
     const cards = [
       ...gameState.community_cards,
       ...Player.getOurPlayer(gameState).hole_cards,
@@ -110,12 +110,14 @@ class Player {
       cards: JSON.stringify(cards),
     });
 
-    return fetch(`https://rainman.leanpoker.org/rank?${params}`)
+    const rank = await fetch(`https://rainman.leanpoker.org/rank?${params}`)
       .then((res) => res.json())
       .then((result) => {
         console.log(`Rank service: ${result.rank}`);
         return result.rank;
       });
+
+    return rank;
   }
 
   static getOurPlayer(gameState) {
