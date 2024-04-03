@@ -1,6 +1,6 @@
 class Player {
   static get VERSION() {
-    return "0.15";
+    return "0.16";
   }
 
   static betRequest(gameState, bet) {
@@ -64,9 +64,9 @@ class Player {
     const numberCards = cards.filter((card) => card.rank.match(/[2-9]/));
 
     if (numberCards.length) {
-      return 1;
-    } else {
       return 0;
+    } else {
+      return 1;
     }
   }
 
