@@ -1,6 +1,6 @@
 class Player {
   static get VERSION() {
-    return "0.3";
+    return "0.4";
   }
 
   static betRequest(gameState, bet) {
@@ -21,7 +21,9 @@ class Player {
     bet(gameState.current_buy_in - gameState.players[gameState.in_action].bet);
   }
 
-  static showdown(gameState) {}
+  static showdown(gameState) {
+    console.log(`Showdown game state: ${JSON.stringify(gameState)}`);
+  }
 }
 
 module.exports = Player;
