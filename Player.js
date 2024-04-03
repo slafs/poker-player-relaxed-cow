@@ -1,6 +1,6 @@
 class Player {
   static get VERSION() {
-    return "0.4";
+    return "0.5";
   }
 
   static betRequest(gameState, bet) {
@@ -8,17 +8,17 @@ class Player {
       gameState.bet_index === 0 &&
       (gameState.dealer + 1) % 5 === gameState.in_action
     ) {
-      bet(gameState.small_blind);
+      return bet(gameState.small_blind);
     }
 
     if (
       gameState.bet_index === 0 &&
       (gameState.dealer + 2) % 5 === gameState.in_action
     ) {
-      bet(gameState.small_blind * 2);
+      return bet(gameState.small_blind * 2);
     }
 
-    bet(gameState.current_buy_in - gameState.players[gameState.in_action].bet);
+    return bet(gameState.current_buy_in - gameState.players[gameState.in_action].bet);
   }
 
   static showdown(gameState) {
